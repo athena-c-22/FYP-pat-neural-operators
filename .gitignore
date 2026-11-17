@@ -75,3 +75,6 @@ results/*
 !results/tables/**
 !results/figures/
 !results/figures/**
+
+# Generated experiment data
+outputs/
