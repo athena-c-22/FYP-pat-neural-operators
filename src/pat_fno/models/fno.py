@@ -62,7 +62,7 @@ class SpectralConv2d(nn.Module):
             self.weights_pos.shape[1],
             height,
             width // 2 + 1,
-            dtype=torch.cfloat,
+            dtype=transformed.dtype,
             device=values.device,
         )
 
