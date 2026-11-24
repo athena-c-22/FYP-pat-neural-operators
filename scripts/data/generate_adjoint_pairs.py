@@ -89,10 +89,11 @@ def main() -> None:
     ap.add_argument("--n", type=int, default=200)
     ap.add_argument("--shard", type=int, default=20)
     ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--seed", type=int, default=SEED, help="master seed; use a new one for each extra batch")
     ap.add_argument("--out", type=Path, default=Path("outputs/learned_adjoint/data"))
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    rng = np.random.default_rng(SEED)
+    rng = np.random.default_rng(args.seed)
     kinds = [KINDS[i] for i in rng.integers(0, len(KINDS), size=args.n)]
     seeds = rng.integers(0, 2**31 - 1, size=args.n)
     t0 = time.time()
@@ -116,7 +117,7 @@ def main() -> None:
     (args.out / "meta.json").write_text(
         json.dumps(
             {
-                "seed": SEED,
+                "seed": args.seed,
                 "n": args.n,
                 "kinds": KINDS,
                 "condition": "periodic_theta89",
